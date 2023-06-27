@@ -3,7 +3,9 @@
         <v-card-title>{{ post.title }}</v-card-title>
         <v-card-subtitle>{{ getRelativeTime(new Date(post.created)) }}</v-card-subtitle>
         <v-card-item>
-            <v-img :src="pb.files.getUrl(post, post.image)"></v-img>
+            <v-card variant="flat">
+                <v-img :src="pb.files.getUrl(post, post.image)"></v-img>
+            </v-card>
             <br />
             <p v-html="post.text"></p>
 

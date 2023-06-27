@@ -31,6 +31,34 @@ const routes = [
     ],
   },
   {
+    path: '/categories',
+    component: () => import('@/layouts/default/Default.vue'),
+    children: [
+      {
+        path: '',
+        name: 'Kategorien',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () => import(/* webpackChunkName: "home" */ '@/views/Categories.vue'),
+      },
+    ],
+  },
+  {
+    path: '/categories/:id',
+    component: () => import('@/layouts/default/Default.vue'),
+    children: [
+      {
+        path: '',
+        name: 'Kategorie',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () => import(/* webpackChunkName: "home" */ '@/views/SingleCategory.vue'),
+      },
+    ],
+  },
+  {
     path: '/',
     component: () => import('@/layouts/default/Default.vue'),
     children: [

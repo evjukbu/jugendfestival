@@ -1,7 +1,7 @@
 <template>
     <div v-if="posts != null">
         <v-container>
-            <v-card v-if="posts.length != 0" class="post-card" v-for="post in posts" :key="post">
+            <v-card v-if="posts.length != 0" class="post-card" v-for="post in posts" @click="$router.push('/posts/' + post.id)" :key="post">
                 <v-img class="align-end text-white" aspect-ratio="16/9" :src="pb.files.getUrl(post, post.image)">
                     <v-card-title>{{ post.title }}</v-card-title>
                 </v-img>
@@ -19,12 +19,16 @@
             </v-card>
         </v-container>
 
-            
+
     </div>
-    <v-list v-else>
-        <v-skeleton-loader v-if="props.maxPosts != undefined" v-for="n in props.maxPosts" class="mx-auto" type="image, article" />
-        <v-skeleton-loader v-else v-for="n in 3" class="mx-auto" type="image, article" />
-    </v-list>
+    <v-container v-else>
+        <v-card class="post-card" v-if="props.maxPosts != undefined" v-for="n in props.maxPosts">
+            <v-skeleton-loader class="mx-auto" type="image, article" />
+        </v-card>
+        <v-card class="post-card" v-else v-for="n in 3">
+            <v-skeleton-loader class="mx-auto" type="image, article" />
+        </v-card>
+    </v-container>
 </template>
 
 <script setup>
@@ -39,7 +43,7 @@ const props = defineProps(["maxPosts"])
 let posts = ref(null)
 
 onMounted(async () => {
-    if(props.maxPosts == undefined) {
+    if (props.maxPosts == undefined) {
         posts.value = await pb.collection('posts').getFullList({
             sort: '-created',
         })
