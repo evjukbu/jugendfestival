@@ -48,11 +48,13 @@ import DefaultBar from './AppBar.vue'
 import DefaultView from './View.vue'
 import {onMounted, ref} from "vue";
 import {useTheme} from "vuetify";
+import {usepb} from "@/plugins/pocketbase";
 
 let drawer = ref(false)
 const theme = useTheme()
 let useCustomTheme = false
 
+const pb = usepb();
 function toggleDrawer() {
   drawer.value = !drawer.value
 }
@@ -75,5 +77,12 @@ onMounted(() => {
       }
     });
   }
+  pb.collection('posts').subscribe('*', function (e) {
+    alert(e.record.title);
+  });
+  console.log("Subscribed to posts")
+
+
 })
+
 </script>
