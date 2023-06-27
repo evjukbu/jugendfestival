@@ -22,11 +22,6 @@
             <v-icon icon="mdi-newspaper"/>
           </template>
         </v-list-item>
-        <v-list-item rounded to="/locations" color="primary" title="Orte" :exact="false">
-          <template v-slot:prepend>
-            <v-icon icon="mdi-map-marker"/>
-          </template>
-        </v-list-item>
         <v-list-item rounded to="/categories" color="primary" title="Kategorien" :exact="false">
           <template v-slot:prepend>
             <v-icon icon="mdi-tag"/>

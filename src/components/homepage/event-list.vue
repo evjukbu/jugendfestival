@@ -42,7 +42,10 @@ let records = ref(null)
 let locations = reactive({})
 let categories = reactive({})
 onMounted(async () => {
-    let r = await pb.collection('events').getList(1, 3);
+    let r = await pb.collection('events').getList(1, 3, {
+        sort: 'start',
+        filter: 'end >= "' + new Date().toISOString().replace('T', ' ').slice(0, -5) + '"'
+    });
     for (const record of r.items) {
         const l = await pb.collection('locations').getOne(record.location)
         locations[l.id] = l

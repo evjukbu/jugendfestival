@@ -5,9 +5,8 @@
       {{ route.name }}
     </v-app-bar-title>
     <template v-slot:append>
-      <v-btn icon @click="$emit('customtheme')">
-        <v-icon v-if="theme.global.name.value === 'dark'" icon="mdi-weather-sunny" />
-        <v-icon v-else icon="mdi-weather-night" />
+      <v-btn icon>
+        <v-icon icon="mdi-dots-vertical" />
       </v-btn>
     </template>
   </v-app-bar>

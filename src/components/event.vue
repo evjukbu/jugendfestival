@@ -1,5 +1,5 @@
 <template>
-    <v-list-item :title="props.item.name">
+    <v-list-item :title="props.item.name" :to="'/events/' + props.item.id">
         <template v-slot:prepend>
             <datecontainer :record="props.item" />
         </template>
