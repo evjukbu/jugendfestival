@@ -28,13 +28,18 @@
           </template>
         </v-list-item>
         <div v-for="page in pages" :key="page.id">
-          <v-list-item v-if="!page.isRedirect" rounded :to="'/pages/' + page.id" color="primary"
-            :title="page.name" :exact="false">
+          <v-list-item v-if="(!page.needsFeatureKey || (cookies.isKey('keys') && cookies.get('keys')[page.featureKey])) && page.isRedirect" rounded color="primary" :title="page.name" :exact="false" :href="page.redirectUrl">
             <template v-slot:prepend>
               <v-icon :icon="page.icon" />
             </template>
           </v-list-item>
-          <v-list-item v-else rounded color="primary" :title="page.name" :exact="false" :href="page.redirectUrl">
+          <v-list-item v-else-if="(!page.needsFeatureKey || (cookies.isKey('keys') && cookies.get('keys')[page.featureKey])) && page.isInternalRedirect" rounded color="primary" :title="page.name" :exact="false" :to="page.redirectUrl">
+            <template v-slot:prepend>
+              <v-icon :icon="page.icon" />
+            </template>
+          </v-list-item>
+          <v-list-item v-if="(!page.needsFeatureKey || (cookies.isKey('keys') && cookies.get('keys')[page.featureKey])) && !page.isInternalRedirect && !page.isRedirect" rounded :to="'/pages/' + page.id" color="primary"
+            :title="page.name" :exact="false">
             <template v-slot:prepend>
               <v-icon :icon="page.icon" />
             </template>
@@ -48,19 +53,19 @@
 
     <default-view />
 
-
   </v-app>
 </template>
 
 <script setup>
 import DefaultBar from './AppBar.vue'
 import DefaultView from './View.vue'
-import { onMounted, ref } from "vue";
+import { onMounted, ref, inject } from "vue";
 import { useTheme } from "vuetify";
 import { usepb } from "@/plugins/pocketbase";
 
 let drawer = ref(false)
 const theme = useTheme()
+const cookies = inject('$cookies');
 let useCustomTheme = false
 
 const pb = usepb();
